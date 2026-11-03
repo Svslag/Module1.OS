@@ -1,0 +1,69 @@
+=== способ: pipe ===
+-- до Ctrl+C (процессы группы 1584):
+  PID  PPID  PGID STAT COMMAND
+ 1584  1582  1584 S    python3 returns.py --mode pipe -n 4 --repeat 40
+ 1586  1584  1584 R    python3 returns.py --mode pipe -n 4 --repeat 40
+ 1587  1584  1584 R    python3 returns.py --mode pipe -n 4 --repeat 40
+ 1588  1584  1584 R    python3 returns.py --mode pipe -n 4 --repeat 40
+ 1589  1584  1584 R    python3 returns.py --mode pipe -n 4 --repeat 40
+-- во время работы:
+  /dev/shm (psm_*): 0
+  /tmp/logs_*:      0
+-- посылаю SIGINT группе 1584 (аналог Ctrl+C)
+
+прервано (SIGINT): дети завершены, ресурсы очищены
+-- код завершения родителя: 130 (130 = прервано по SIGINT)
+-- после Ctrl+C: процессы группы 1584:
+  PID  PPID  PGID STAT COMMAND
+  процессов в группе (без заголовка): 0
+  зомби (STAT=Z) в группе:           0
+-- после Ctrl+C: остатки ресурсов:
+  /dev/shm (psm_*): 0
+  /tmp/logs_*:      0
+
+=== способ: shm ===
+-- до Ctrl+C (процессы группы 1624):
+  PID  PPID  PGID STAT COMMAND
+ 1624  1582  1624 S    python3 returns.py --mode shm -n 4 --repeat 40
+ 1626  1624  1624 R    python3 returns.py --mode shm -n 4 --repeat 40
+ 1627  1624  1624 R    python3 returns.py --mode shm -n 4 --repeat 40
+ 1628  1624  1624 R    python3 returns.py --mode shm -n 4 --repeat 40
+ 1629  1624  1624 R    python3 returns.py --mode shm -n 4 --repeat 40
+-- во время работы:
+  /dev/shm (psm_*): 1
+  /tmp/logs_*:      0
+-- посылаю SIGINT группе 1624 (аналог Ctrl+C)
+
+прервано (SIGINT): дети завершены, ресурсы очищены
+-- код завершения родителя: 130 (130 = прервано по SIGINT)
+-- после Ctrl+C: процессы группы 1624:
+  PID  PPID  PGID STAT COMMAND
+  процессов в группе (без заголовка): 0
+  зомби (STAT=Z) в группе:           0
+-- после Ctrl+C: остатки ресурсов:
+  /dev/shm (psm_*): 0
+  /tmp/logs_*:      0
+
+=== способ: file ===
+-- до Ctrl+C (процессы группы 1665):
+  PID  PPID  PGID STAT COMMAND
+ 1665  1582  1665 S    python3 returns.py --mode file -n 4 --repeat 40
+ 1667  1665  1665 R    python3 returns.py --mode file -n 4 --repeat 40
+ 1668  1665  1665 R    python3 returns.py --mode file -n 4 --repeat 40
+ 1669  1665  1665 R    python3 returns.py --mode file -n 4 --repeat 40
+ 1670  1665  1665 R    python3 returns.py --mode file -n 4 --repeat 40
+-- во время работы:
+  /dev/shm (psm_*): 0
+  /tmp/logs_*:      1
+-- посылаю SIGINT группе 1665 (аналог Ctrl+C)
+
+прервано (SIGINT): дети завершены, ресурсы очищены
+-- код завершения родителя: 130 (130 = прервано по SIGINT)
+-- после Ctrl+C: процессы группы 1665:
+  PID  PPID  PGID STAT COMMAND
+  процессов в группе (без заголовка): 0
+  зомби (STAT=Z) в группе:           0
+-- после Ctrl+C: остатки ресурсов:
+  /dev/shm (psm_*): 0
+  /tmp/logs_*:      0
+
